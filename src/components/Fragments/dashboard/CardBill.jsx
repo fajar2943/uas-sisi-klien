@@ -11,19 +11,32 @@ const CardBill = () => {
         setLoading(true);
         try {
             const response = await new Promise((resolve) =>
-                setTimeout(() => resolve({ data: bills }), 1500) // Simulasi delay fetch
+                // delay fetch
+                setTimeout(() => resolve({ data: bills }), 1500) 
             );
+            // const refreshToken = localStorage.getItem("refreshToken");
+
+            // const response = await axios.get(
+            //     "https://jwt-auth-eight-neon.vercel.app/bills",
+            //     {
+            //     headers: {
+            //         Authorization: `Bearer ${refreshToken}`,
+            //     },
+            //     }
+            // );
+            console.log(response.data);
+            
             setBillData(response.data); // Set data dari backend
         } catch (error) {
             console.error("Error fetching bills:", error);
-            setBillData(bills); // Gunakan data fallback jika gagal
+            setBillData(bills); // Jika gagal gunakan data fallback
         } finally {
-            setLoading(false); // Matikan loader
+            setLoading(false); // loader off
         }
     };
 
     useEffect(() => {
-        fetchBills(); // Panggil fetch data saat komponen di-mount
+        fetchBills();
     }, []);
 
     const billCard = billData.map((bill) => (
